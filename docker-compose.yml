@@ -6,8 +6,20 @@ volumes:
 networks:
   banco:
   web:
+  fila:
 
 services:
+  db: 
+    image: postgres:9.6
+    volumes:
+      # volumes dos dados
+      - dados:/var/lib/postgresql/data
+      # scripts
+      - ./scripts:/scripts
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - banco
+
   app:
     image: python:3.6
     volumes:
@@ -17,8 +29,10 @@ services:
     networks:
       - banco
       - web
+      - fila
     depends_on:
       - db
+      - queue
 
   frontend:
     image: nginx:1.13
@@ -34,13 +48,19 @@ services:
     depends_on:
       - app
 
-  db: 
-    image: postgres:9.6
-    volumes:
-      # volumes dos dados
-      - dados:/var/lib/postgresql/data
-      # scripts
-      - ./scripts:/scripts
-      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+  queue:
+    image: redis:3.2
     networks:
-      - banco
+      - fila
+  
+  worker:
+    image: python:3.6
+    volumes:
+      - ./worker:/worker
+    working_dir:
+      /worker
+    command: bash ./app.sh
+    networks:
+      - fila
+    depends_on:
+      - queue
