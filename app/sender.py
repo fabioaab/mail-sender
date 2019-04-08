@@ -17,7 +17,6 @@ class Sender(Bottle):
         cur.execute(SQL, (assunto, mensagem))
         self.conn.commit()
         cur.close()
-        self.conn.close()
 
         msg = {'assunto': assunto, 'mensagem': mensagem}
         self.fila.rpush('sender', json.dumps(msg))
@@ -32,4 +31,4 @@ class Sender(Bottle):
 
 if __name__ == '__main__':
     sender = Sender()
-    Sender.run(host='0.0.0.0', port=8080, debug=True)
+    sender.run(host='0.0.0.0', port=8080, debug=True)
