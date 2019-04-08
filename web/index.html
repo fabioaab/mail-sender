@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Email sender</title>
+        <meta name="description" content="Email sender">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <style>
+            label { display: block }
+            textarea, input { width: 400px}
+        </style>
+    </head>
+    <body class="container">
+        <h1>Email Sender</h1>
+
+        <form action="http://localhost/api" method="POST">
+            <div>
+                <label for="assunto">Assunto</label>
+                <input type="text" name="assunto" />
+            </div>
+             <div>
+                <label for="mensagem">Mensagem</label>
+                <textarea type="text" name="mensagem" cols="50" rows="6" ></textarea>
+            </div>
+            <div>
+                <button>Enviar</button>
+            </div>
+        </form>
+        
+    </body>
+</html>
